@@ -4,12 +4,18 @@ from PIL import Image
 from Table import Table
 import sys
 
-def isolate_lines(src, structuring_element):
-    cv.erode(src, structuring_element, src, (-1, -1)) # makes white spots smaller
-    cv.dilate(src, structuring_element, src, (-1, -1)) # makes white spots bigger
+# Morpholigical operation to remove small objects
+def opening(src, structuring_elemwnt):
+    cv.erode(src, structuring_elemwnt, src, (-1,-1))
+    cv.dilate(src, structuring_elemwnt, src, (-1,-1))
 
-MIN_TABLE_AREA = 50 # min table area to be considered a table
-EPSILON = 3 # epsilon value for contour approximation
+# Morpholigical operation to remove small holes (backgroubnd)
+def closing(src, structuring_elemwnt):
+    cv.dilate(src, structuring_elemwnt, src, (-1,-1))
+    cv.erode(src, structuring_elemwnt, src, (-1,-1))
+
+MIN_TABLE_AREA = 50                                     # min table area to be considered a table
+EPSILON = 3                                             # epsilon value for contour approximation
 def verify_table(contour, intersections):
     area = cv.contourArea(contour)
 
@@ -19,23 +25,22 @@ def verify_table(contour, intersections):
     curve = cv.approxPolyDP(contour, EPSILON, True)
 
     rect = cv.boundingRect(curve) # format of each rect: x, y, w, h
-
-    print("rectangel", rect)
     
     possible_table_region = intersections[rect[1]:rect[1] + rect[3], rect[0]:rect[0] + rect[2]]
-    print("table region: ",possible_table_region)
-    print()
+    
     (possible_table_joints, _) = cv.findContours(possible_table_region, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)
-    print("counters table region: ", possible_table_joints)
+    '''print("\ncounters table region: ")
+    for pnt in possible_table_joints:
+        print("\n", pnt)'''
 
-    if len(possible_table_joints) < 5:
+    if len(possible_table_joints) <= 4:
         return (None, None)
 
     return rect, possible_table_joints
 
 
 def main():
-    path = "img2.png"
+    path = "img.png"
     #path = "Exhibit.pdfpage_8.jpg"
     ext_img = Image.open(path)
     ext_img.save("data/target.jpg","JPEG")
@@ -54,12 +59,12 @@ def main():
     h_size = int(horizontal.shape[1]/SCALE)
     h_structure = cv.getStructuringElement(cv.MORPH_RECT, (h_size, 1))
     #cv.imshow("horizontal structuring element",h_structure)
-    isolate_lines(horizontal, h_structure)
+    opening(horizontal, h_structure)
 
     v_size = int(vertical.shape[0]/SCALE)
     v_structure = cv.getStructuringElement(cv.MORPH_RECT, (1, v_size))
     #cv.imshow("vertical structuring element", v_structure)
-    isolate_lines(vertical, v_structure)
+    opening(vertical, v_structure)
 
     #cv.imshow("horizontal",horizontal)
     #cv.imshow("vertical", vertical)
@@ -90,7 +95,7 @@ def main():
         (rect_cords, table_joints) = verify_table(contours[i], intersections)
         if rect_cords == None or table_joints == None:
             continue
-
+ 
         table = Table(rect_cords[0], rect_cords[1], rect_cords[2], rect_cords[3])
 
         joint_coords = []
