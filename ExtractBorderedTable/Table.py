@@ -7,7 +7,7 @@ class Table:
         self.joints = None
 
     def __str__(self):
-        return "(x: %d, y: %d, w: %d, h: %d)" % (self.x, self.x + self.w, self.y, self.y + self.h)
+        return "(x: %d, (x+w): %d, y: %d, (y+h): %d)" % (self.x, self.x + self.w, self.y, self.y + self.h)
     
     # Stores the coordinates of the table joints.
     # Assumes the n-dimensional array joints is sorted in ascending order.
