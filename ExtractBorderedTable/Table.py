@@ -7,7 +7,7 @@ class Table:
         self.joints = None
 
     def __str__(self):
-        return "(x: %d, (x+w): %d, y: %d, (y+h): %d)" % (self.x, self.x + self.w, self.y, self.y + self.h)
+        return "(x: %d, y: %d, w: %d, h: %d)" % (self.x, self.y, self.w, self.h)
     
     def set_joints(self, joints):
         if self.joints != None:
