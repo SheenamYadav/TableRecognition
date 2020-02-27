@@ -29,7 +29,7 @@ def verify_table(contour, intersections):
     possible_table_region = intersections[rect[1]:rect[1] + rect[3], rect[0]:rect[0] + rect[2]]
     
     (possible_table_joints, _) = cv.findContours(possible_table_region, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)
-    '''print("\ncounters table region: ")
+    '''print("\n------ ")
     for pnt in possible_table_joints:
         print("\n", pnt)'''
 
