@@ -1,0 +1,15 @@
+ex99-2.pdfpage_4,92,298,11571,1477,table
+ex99-2.pdfpage_29,255,293,1408,893,table
+ex99-2.pdfpage_34,197,345,1444,593,table
+ex99-2.pdfpage_22,81,340,1571,1319,table
+ex99-2.pdfpage_15,139,645,1513,987,table
+ex99-2.pdfpage_15,155,1040,1513,987,table
+ex99-2.pdfpage_15,155,1040,1513,1351,table
+ex99-2.pdfpage_15,171,1419,1518,1624,table
+ex99-2.pdfpage_18,239,319,1397,766,table
+ex99-2.pdfpage_17,87,808,1565,1130,table
+ex99-2.pdfpage_17,87,424,1518,751,table
+ex99-2.pdfpage_24,129,493,1508,877,table
+ex99-2.pdfpage_23,108,287,1576,1003,table
+ex99-2.pdfpage_39,134,251,1508,756,table
+ex99-2.pdfpage_39,260,1366,1397,1614,table
